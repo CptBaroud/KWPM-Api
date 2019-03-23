@@ -40,7 +40,7 @@ let word = {
         }
 
         console.log(sortie);
-        return sortie;
+        return sortie[1];
     }
 
 };
