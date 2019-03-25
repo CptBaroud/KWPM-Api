@@ -35,14 +35,14 @@ let word = {
         }
         for (let b = 0; b < array.length - count; b++) {
             console.log("Le mot cle ne match pas avec le fichier .json");
-            if (checkDef(def[b]) >= 3) {
+            if (checkDef(def[b]) >= 2) {
                 sortie[c] = def[b];
                 c++;
             }
         }
 
         console.log(sortie);
-        return sortie[1];
+        return sortie[0];
     }
 
 };
