@@ -2,6 +2,8 @@ let path = "../mot.json";
 let json = require(path);
 let fs = require('fs');
 
+
+//TODO : lors du check des defintion ne verfier le mot qu'une fois
 let word = {
 
     //permet de checker si le mot a une raltion avec l'informatique
@@ -20,20 +22,20 @@ let word = {
                         sortie[c] = def[a];
                         c++;
                         write(array, a, b);
-                        count ++;
+                        count++;
                     } else if (checkDef(def[a]) > 2) {
 
                         sortie[c] = def[a];
                         c++;
                         write(array, a, b);
-                        count ++;
+                        count++;
                     }
                 }
             }
         }
-        for (let b = 0; b<array.length-count; b++){
+        for (let b = 0; b < array.length - count; b++) {
             console.log("Le mot cle ne match pas avec le fichier .json");
-            if(checkDef(def[b]) >= 1){
+            if (checkDef(def[b]) >= 3) {
                 sortie[c] = def[b];
                 c++;
             }
@@ -134,6 +136,7 @@ function checkDef(def) {
     let temp = JSON.parse(jsonfile);
 
     let compt = 0;
+    let c = 0;
     let mot = [];
     let deftemp = def.split(" ");
 
@@ -141,12 +144,19 @@ function checkDef(def) {
         for (let b = 0; b < deftemp.length; b++) {
             if (deftemp[b].match(temp.stockage[a])) {
                 compt = compt + 1;
-                mot[a] = deftemp[b];
+                mot[c] = deftemp[b];
+                c++;
+                temp.stockage[a].replace(deftemp[b], " ");
+                console.log("Temp : "+temp.stockage[a]);
+                console.log("DefTemp : " + deftemp[b] + " JSON : " + temp.stockage[a]);
             }
         }
     }
+
     console.log("Tab temp de mots : " + mot);
     console.log("Compt : " + compt);
+    console.log("");
+
     return compt;
 }
 
