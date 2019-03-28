@@ -13,7 +13,7 @@ router.get('/:search?', function(req, res, next) {
         let words = JSON.parse(get.getJson(url))[1];
         let def = JSON.parse(get.getJson(url))[2];
         let defFinal = word.checkRelationWithName(words, def);
-
+        word.removeStopword(def);
         res.json(defFinal);
      }else{
         res.json("No search param");

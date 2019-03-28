@@ -12,6 +12,8 @@
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
+    "nltk": "0.0.1",
+    "nltk-stopwords": "^1.0.3",
     "request": "^2.88.0",
     "xmlhttprequest": "^1.8.0"
   }

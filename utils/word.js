@@ -1,7 +1,9 @@
 let path = "../mot.json";
 let json = require(path);
-let fs = require('fs');
 
+let fs = require('fs');
+let stopwords = require('nltk-stopwords');
+let french = stopwords.load("french");
 
 //TODO : lors du check des defintion ne verfier le mot qu'une fois
 let word = {
@@ -43,8 +45,13 @@ let word = {
 
         console.log(sortie);
         return sortie[0];
-    }
+    },
 
+    removeStopword: function (def) {
+        for(let a=0; a<def.length; a++){
+            console.log(compt(removeStopwords(def[a])));
+        }
+    }
 };
 
 /**
@@ -147,7 +154,7 @@ function checkDef(def) {
                 mot[c] = deftemp[b];
                 c++;
                 temp.stockage[a].replace(deftemp[b], " ");
-                console.log("Temp : "+temp.stockage[a]);
+                console.log("Temp : " + temp.stockage[a]);
                 console.log("DefTemp : " + deftemp[b] + " JSON : " + temp.stockage[a]);
             }
         }
@@ -159,5 +166,34 @@ function checkDef(def) {
 
     return compt;
 }
+
+function removeStopwords(string) {
+    return stopwords.remove(string, french);
+}
+
+function compt(string) {
+    let str = string.replace(",", "").replace(".","").replace("(", "").replace(")", "").replace(new RegExp(/.[^\w ]/), "");
+    let temp = str.split(" ");
+    let counts = {};
+    console.log(str);
+    for(let a= 0; a<temp.length; a++){
+        let word = temp[a].toLowerCase();
+        if(!/\d+/.test(word)){
+           if(counts[word] === undefined){
+               counts[word] = 1;
+           } else {
+               counts[word] = counts[word] + 1;
+           }
+        }
+    }
+
+    return counts;
+}
+
+function tdfidf(array) {
+    let T = [];
+    let t = 0;
+}
+
 
 module.exports = word;
