@@ -21,13 +21,13 @@ let word = {
                     console.log(array[a]);
                     if (isMatching(array[a]) > 2) {
 
-                        sortie[c] = def[a];
+                        sortie[c] = array[a];
                         c++;
                         write(array, a, b);
                         count++;
                     } else if (checkDef(def[a]) > 2) {
 
-                        sortie[c] = def[a];
+                        sortie[c] = array[a];
                         c++;
                         write(array, a, b);
                         count++;
@@ -48,9 +48,17 @@ let word = {
     },
 
     removeStopword: function (def) {
-        for(let a=0; a<def.length; a++){
-            console.log(compt(removeStopwords(def[a])));
+        for (let a = 0; a < def.length; a++) {
+            tf(def[a]);
         }
+    },
+
+    removeFckingTags: function (page) {
+        let key = Object.keys(page);
+        let pageTemp = page[key];
+        console.log(pageTemp["extract"]);
+        console.log(pageTemp[key]["Extract"]);
+        console.log(page[key]);
     }
 };
 
@@ -172,27 +180,38 @@ function removeStopwords(string) {
 }
 
 function compt(string) {
-    let str = string.replace(",", "").replace(".","").replace("(", "").replace(")", "").replace(new RegExp(/.[^\w ]/), "");
-    let temp = str.split(" ");
+    let str = string.replace(",", "").replace(".", "").replace("(", "").replace(")", "");
+    let strTemp = stopwords.remove(str, french);
+    let temp = strTemp.split(" ");
     let counts = {};
     console.log(str);
-    for(let a= 0; a<temp.length; a++){
+    for (let a = 0; a < temp.length; a++) {
         let word = temp[a].toLowerCase();
-        if(!/\d+/.test(word)){
-           if(counts[word] === undefined){
-               counts[word] = 1;
-           } else {
-               counts[word] = counts[word] + 1;
-           }
+        if (!/\d+/.test(word)) {
+            if (counts[word] === undefined) {
+                counts[word] = 1;
+            } else {
+                counts[word] = counts[word] + 1;
+            }
         }
     }
 
     return counts;
 }
 
-function tdfidf(array) {
+function tf(array) {
     let T = [];
     let t = 0;
+    let word = compt(array);
+    let keys = Object.keys(word);
+    let out = {};
+
+    for(let a=0; a<keys.length; a++){
+        console.log(word[keys[a]]);
+        out[keys[a]] = word[keys[a]]/keys.length;
+    }
+
+    console.log(out);
 }
 
 
